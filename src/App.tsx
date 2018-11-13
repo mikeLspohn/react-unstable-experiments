@@ -5,12 +5,25 @@ import PositionForm from "./PositionForm"
 import PokeList from "./PokeList"
 
 function App() {
+  /* Stateful function component with useState Hook! */
   const [pokeName, setPokeName] = useState("bulbasaur")
   const [searchTerm, setSearchTerm] = useState("")
+  /*
+   * Mutable variable references (instance variable)
+   * can be used for anything you may use an instance variabe (this.something) for
+   * In this case, a boolean value that we don't care to keep in state because it
+   * only serves to update once.
+   *
+   * Can also be used as a `ref` to a Component of DOM node like `React.createRef` current does
+   */
+
   let hasSearched = useRef(false)
 
   {
-    /* Lifecylces condensed into one logical spot for and side-effect code (componentDidMount/DidUpdate) */
+    /*
+     *  Lifecylces condensed into one logical spot for
+     *  side-effect code (e.g. componentDidMount/DidUpdate)
+     */
   }
   useEffect(() => {
     if (!hasSearched.current) {
