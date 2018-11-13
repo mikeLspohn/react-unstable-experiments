@@ -14,7 +14,8 @@ function App() {
    * In this case, a boolean value that we don't care to keep in state because it
    * only serves to update once.
    *
-   * Can also be used as a `ref` to a Component of DOM node like `React.createRef` current does
+   * Can also be used as a
+   * `ref` to a Component or DOM node like `React.createRef` current does (see EditableTextInput for usage)
    */
 
   let hasSearched = useRef(false)
