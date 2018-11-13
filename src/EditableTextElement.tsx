@@ -9,7 +9,7 @@ interface ReactElementRef {
 
 export function useEditableTextAbilities(isValid = false) {
   const [isEditing, setIsEditing] = useState(false)
-  // Ref used to attach to a consume provided input
+  // Ref used to attach to a consumer provided input
   const elRef: ElementRef = useRef(null)
 
   useEffect(() => {
@@ -23,6 +23,7 @@ export function useEditableTextAbilities(isValid = false) {
 
   // Convenience function for setting editing mode to false on an inputs blur
   const onBlur = () => {
+    // don't want to blur off if input is empty
     isValid && setIsEditing(false)
   }
 
