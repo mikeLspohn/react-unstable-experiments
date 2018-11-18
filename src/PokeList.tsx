@@ -27,15 +27,6 @@ interface PokemonAttack {
 }
 
 // Reducer Interfaces
-//
-// The awesome thing about typescript wtih reducers
-// is there's no chance of missing a `case` in a switch
-// over these types, and you can be confident your reducer
-// can't be called with improper action types and that it will
-// always return the correct state shape
-// Besides actual logic (math, reordering so on) everything is really
-// safe with the type checking and it elminates a lot of need for
-// simple tests like testing that an actionCreator returns a valid action type
 type actionType = "ADD_POKEMON" | "POKEMON_NOT_FOUND"
 
 interface action {
@@ -48,15 +39,9 @@ type reducerState<T> = {
   error: string
 }
 
-// New experimental async rendering data fetcher!
 const myPokemon = createResource(fetchPokemon)
 const initialState: reducerState<Pokemon> = { pokemon: [], error: "" }
 
-// The real advantages of the `reducer` pattern really come out with
-// static typing in place. We can have much more assurance that we have a pure
-// data-in data-out function that always yields predicatable results.
-// And we can also feel more secure in our own ability to not mess up when dispatch an
-// action name "ADD_NEW_ITEM_TO_COMPENSABLE_DUTY" (and elminates the need to set those up as constants)
 const pokemonReducer = (
   state = initialState,
   { type, payload }: action
@@ -74,16 +59,11 @@ const pokemonReducer = (
 }
 
 export default function PokeList({ search }: PokeListProps) {
-  // call to resource.read `throws` a promise and `Suspend`s rendering until it resolves
-  // then renders the return below
   const [pokemonList, dispatch] = useReducer(pokemonReducer, initialState)
   const pokemonFromSearch = myPokemon.read(search)
 
   useEffect(
     () => {
-      // if our search fetched a pokemon successfully
-      // and the pokemon is not already in our list then dispatch addPokemon
-      // otherwise set the error state to show a not found message
       if (
         pokemonFromSearch &&
         !pokemonList.pokemon.find(
@@ -95,50 +75,83 @@ export default function PokeList({ search }: PokeListProps) {
         dispatch({ type: "POKEMON_NOT_FOUND" })
       }
     },
-    // 2nd param to useEffect is what tells it when it should refire
-    // so whenever pokemonFromSearch changes, this code should refire on that render
     [pokemonFromSearch]
   )
 
-  // with `pokemonList` being typed (return type from reducer function) we can
-  // be sure that nothing in render should ever fail because of trying to access
-  // a property of `undefined` (cannot call length of undefined)
-  // and if the data shape for `Pokemon` ever changes, it will be easy to spot
-  // what and where exactly in the UI that props need to be updated accordingly so that could
-  // never be something that simply got looked over
   return (
     <>
-      {pokemonList.error && <h1>{pokemonList.error}</h1>}
+      {pokemonList.error && (
+        <h1 style={{ textAlign: "center" }}>{pokemonList.error}</h1>
+      )}
       {pokemonList.pokemon.map(pokeman => (
         <div
           style={{
             backgroundColor: "#f5f5f5",
             padding: "20px",
-            margin: "20px auto",
-            width: "50%"
+            width: "70%",
+            margin: "20px auto 40px auto",
+            overflow: "hidden"
           }}
         >
-          <h1>{pokeman.name}</h1>
-          <p>{pokeman.number}</p>
+          <h1>
+            {pokeman.name}{" "}
+            <span style={{ fontSize: "14px" }}>{pokeman.number}</span>
+          </h1>
           <h3>Attacks:</h3>
 
-          <p>
-            <strong>Fast</strong>
-          </p>
-          {pokeman.attacks.fast.map(attack => (
+          <div>
             <p>
-              {attack.name} {attack.type} {attack.damage}
+              <strong>Fast</strong>
             </p>
-          ))}
+            <table
+              style={{
+                border: "1px solid black",
+                padding: "4px",
+                textAlign: "center",
+                width: "100%"
+              }}
+            >
+              <thead>
+                <th>name</th>
+                <th>type</th>
+                <th>damage</th>
+              </thead>
+              {pokeman.attacks.fast.map((attack, i) => (
+                <tr key={i}>
+                  <td style={{ width: "33%" }}>{attack.name}</td>
+                  <td style={{ width: "33%" }}>{attack.type}</td>
+                  <td style={{ width: "33%" }}>{attack.damage}</td>
+                </tr>
+              ))}
+            </table>
+          </div>
 
-          <p>
-            <strong>Special</strong>
-          </p>
-          {pokeman.attacks.special.map(attack => (
+          <div>
             <p>
-              {attack.name} {attack.type} {attack.damage}
+              <strong>Special</strong>
             </p>
-          ))}
+            <table
+              style={{
+                border: "1px solid black",
+                padding: "4px",
+                textAlign: "center",
+                width: "100%"
+              }}
+            >
+              <thead>
+                <th>name</th>
+                <th>type</th>
+                <th>damage</th>
+              </thead>
+              {pokeman.attacks.special.map((attack, i) => (
+                <tr key={i}>
+                  <td style={{ width: "33%" }}>{attack.name}</td>
+                  <td style={{ width: "33%" }}>{attack.type}</td>
+                  <td style={{ width: "33%" }}>{attack.damage}</td>
+                </tr>
+              ))}
+            </table>
+          </div>
         </div>
       ))}
     </>

@@ -36,16 +36,22 @@ function App() {
 
   return (
     <div className="App">
-      <TodoList />
-      <div style={{ marginBottom: "80px" }} />
-      <input
-        name="pokeName"
-        value={pokeName}
-        onChange={e => setPokeName(e.target.value)}
-      />
-      <button onClick={() => setSearchTerm(pokeName)}>Search</button>
+      <div style={{ marginTop: "40px", textAlign: "center" }}>
+        <input
+          name="pokeName"
+          value={pokeName}
+          style={{ fontSize: "20px", padding: "6px", marginRight: "20px" }}
+          onChange={e => setPokeName(e.target.value)}
+        />
+        <button
+          style={{ fontSize: "20px", padding: "6px", borderRadius: "4px" }}
+          onClick={() => setSearchTerm(pokeName)}
+        >
+          Search
+        </button>
+      </div>
 
-      <Suspense fallback={<h1>loading...</h1>}>
+      <Suspense fallback={<h1 style={{ textAlign: "center" }}>loading...</h1>}>
         {/* PokeList reads a react-cache resource (fetch api call)
          *   so we wrap this with `Suspense` and provide a fallback to render until the promise has resolved
          *
