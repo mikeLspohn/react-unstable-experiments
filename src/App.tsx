@@ -3,6 +3,7 @@ import logo from "./logo.svg"
 import "./App.css"
 import PositionForm from "./PositionForm"
 import PokeList from "./PokeList"
+import TodoList from "./TodoList"
 
 function App() {
   /* Stateful function component with useState Hook! */
@@ -35,6 +36,8 @@ function App() {
 
   return (
     <div className="App">
+      <TodoList />
+      <div style={{ marginBottom: "80px" }} />
       <input
         name="pokeName"
         value={pokeName}

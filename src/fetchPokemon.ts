@@ -10,6 +10,11 @@ function fetchPokemon(name: string) {
             number
             name
             attacks {
+              fast {
+                name
+                type
+                damage
+              }
               special {
                 name
                 type
