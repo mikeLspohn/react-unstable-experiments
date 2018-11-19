@@ -12,6 +12,7 @@
     "lodash": "^4.17.11",
     "moment": "^2.22.2",
     "react": "^16.7.0-alpha.0",
+    "react-beautiful-dnd": "^10.0.1",
     "react-cache": "^2.0.0-alpha.1",
     "react-dom": "^16.7.0-alpha.0",
     "react-scripts": "2.1.1",

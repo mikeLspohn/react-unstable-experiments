@@ -42,6 +42,20 @@ type reducerState<T> = {
 const myPokemon = createResource(fetchPokemon)
 const initialState: reducerState<Pokemon> = { pokemon: [], error: "" }
 
+type objWithKey<T> = { [key: string]: T }
+const updateIn = (key: string, obj: objWithKey<any>, value: object) => {
+  return { ...obj, [key]: { ...obj[key], ...value } }
+}
+
+const user = {
+  id: 1,
+  employee: {
+    firstName: "john",
+    lastName: "jonson"
+  }
+}
+console.log(updateIn("employee", user, { firstName: "joey" }))
+
 const pokemonReducer = (
   state = initialState,
   { type, payload }: action

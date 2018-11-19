@@ -4,6 +4,8 @@ import "./App.css"
 import PositionForm from "./PositionForm"
 import PokeList from "./PokeList"
 import TodoList from "./TodoList"
+import DnDContext from "./DragAndDropExample/DndContext"
+import DndContext from "./DragAndDropExample/DndContext"
 
 function App() {
   /* Stateful function component with useState Hook! */
@@ -36,6 +38,7 @@ function App() {
 
   return (
     <div className="App">
+      <DndContext />
       <div style={{ marginTop: "40px", textAlign: "center" }}>
         <input
           name="pokeName"

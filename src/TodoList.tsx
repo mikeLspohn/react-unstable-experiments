@@ -40,6 +40,19 @@ const deleteTodo = (id: number): actionWithParams<string> => ({
   id
 })
 
+type objWithKey<T> = { [key: string]: T }
+const updateIn = (key: string, obj: objWithKey<any>, value: object) => {
+  return { ...obj, [key]: { ...obj[key], ...value } }
+}
+
+const user = {
+  id: 1,
+  employee: {
+    firstName: "john",
+    lastName: "jonson"
+  }
+}
+
 // Todos Reducer
 const todosReducer = (
   state = initialState,
@@ -47,6 +60,7 @@ const todosReducer = (
 ): todosReducerState => {
   const { todos } = state
   const currentIndex = todos.findIndex(todo => todo.id === action.id)
+  console.log(updateIn("employee", user, { firstName: "joey" }))
 
   switch (action.type) {
     case "ADD_TODO":
